@@ -4,34 +4,40 @@ import {router, Slot} from 'expo-router';
 import {ApplicationProvider, IconRegistry} from '@ui-kitten/components';
 import React, {Suspense, useEffect} from "react";
 import { EvaIconsPack } from '@ui-kitten/eva-icons';
-import {StyleSheet} from "react-native";
-import { SafeAreaView } from 'react-native-safe-area-context';
+import {Dimensions, StyleSheet, View} from "react-native";
+import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 import {AuthRealmProvider, useAuthEntity, useAuthRealm} from "@/data/AuthRealm";
-import AccessToken from "@/models/auth/AccessToken";
-import {isBefore} from "date-fns";
-import {utcToZonedTime} from "date-fns-tz";
+import {AuthProvider} from "@/auth/AuthProvider";
+import {wordsynk} from "@/theme/wordsynk";
 
 export default function HomeLayout() {
+
+    const insets = useSafeAreaInsets();
+    const height = Dimensions.get('window').height;
 
     return (
         <>
             <IconRegistry icons={EvaIconsPack} />
             <AuthRealmProvider>
-                <ApplicationProvider {...eva} theme={eva.light}>
-                    <SafeAreaView style={styles.foo}>
+                <AuthProvider>
+                    <ApplicationProvider {...eva} theme={wordsynk}>
                         <Suspense>
                             <Slot />
                         </Suspense>
-                    </SafeAreaView>
-                </ApplicationProvider>
+                    </ApplicationProvider>
+                </AuthProvider>
             </AuthRealmProvider>
         </>
     );
 }
 
 const styles = StyleSheet.create({
-    foo: {
+    main: {
         flex: 1,
-        backgroundColor: '#fff'
+        backgroundColor: '#ff9'
+    },
+    status: {
+        backgroundColor: '#f76',
+        height: 200
     },
 });

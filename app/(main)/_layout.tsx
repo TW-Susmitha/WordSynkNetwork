@@ -3,25 +3,26 @@ import {Slot} from 'expo-router';
 import React, {Suspense} from "react";
 import {NavigationTabs} from "../../components/navigation/navigation-tabs";
 import {ApplicationHeader} from "../../components/navigation/application-header";
-import {StyleSheet, View} from "react-native";
+import {StyleSheet} from "react-native";
+import {SafeAreaView} from "react-native-safe-area-context";
 
 export default function HomeLayout() {
 
     return (
         <>
-            <View style={styles.foo}>
+            <SafeAreaView style={styles.main}>
                 <ApplicationHeader />
                 <Suspense>
                     <Slot />
                 </Suspense>
                 <NavigationTabs />
-            </View>
+            </SafeAreaView>
         </>
     );
 }
 
 const styles = StyleSheet.create({
-    foo: {
+    main: {
         flex: 1,
         backgroundColor: '#fff'
     },

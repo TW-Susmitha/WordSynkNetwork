@@ -1,40 +1,37 @@
 import {router} from 'expo-router';
 import {BottomNavigation, BottomNavigationTab, Icon, IconElement} from '@ui-kitten/components';
 import React, {useEffect} from "react";
-import {useAtom} from "jotai";
 import {useAuthEntity} from "@/data/AuthRealm";
 import AccessToken from "@/models/auth/AccessToken";
-import {isBefore} from "date-fns";
-import {utcToZonedTime} from "date-fns-tz";
 
 export const NavigationTabs = () => {
     const [selectedIndex, setSelectedIndex] = React.useState(0);
     let isRendered = false;
 
-    /*useEffect(()=>{
+    useEffect(()=>{
         router.push(navigationItems[selectedIndex].link);
     },[selectedIndex])
-*/
+
     const navigationItems = [
         {
-            link: "/main/bookings",
+            link: "/bookings",
             title: "Bookings",
             icon: "calendar-outline"
         },
         {
-            link: "/main/offers",
+            link: "/offers",
             title: "Offers",
             icon: "inbox-outline"
         },
         {
-            link: "/main/invoices",
+            link: "/invoices",
             title: "Invoices",
             icon: "file-text-outline"
         },
         {
-            link: "/main/settings",
-            title: "Settings",
-            icon: "settings-outline"
+            link: "/insights",
+            title: "Insights",
+            icon: "bulb-outline"
         },
     ]
 
