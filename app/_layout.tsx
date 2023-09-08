@@ -1,6 +1,6 @@
 
 import * as eva from '@eva-design/eva';
-import {router, Slot} from 'expo-router';
+import {router, Slot, Stack} from 'expo-router';
 import {ApplicationProvider, IconRegistry} from '@ui-kitten/components';
 import React, {Suspense, useEffect} from "react";
 import { EvaIconsPack } from '@ui-kitten/eva-icons';
@@ -22,7 +22,44 @@ export default function HomeLayout() {
                 <AuthProvider>
                     <ApplicationProvider {...eva} theme={wordsynk}>
                         <Suspense>
-                            <Slot />
+                            <Stack>
+                                <Stack.Screen name="auth" options={{
+                                    headerTitle: 'Login',
+                                    headerStyle: {
+                                        backgroundColor: "#fff"
+                                    }
+                                }} />
+                                <Stack.Screen name="bookings" options={{
+                                    headerTitle: 'Bookings',
+                                    headerStyle: {
+                                        backgroundColor: "#fff"
+                                    }
+                                }} />
+                                <Stack.Screen name="offers" options={{
+                                    headerTitle: 'Offers',
+                                    headerStyle: {
+                                        backgroundColor: "#fff"
+                                    }
+                                }} />
+                                <Stack.Screen name="insights" options={{
+                                    headerTitle: 'Insights',
+                                    headerStyle: {
+                                        backgroundColor: "#fff"
+                                    }
+                                }} />
+                                <Stack.Screen name="invoices" options={{
+                                    headerTitle: 'Invoices',
+                                    headerStyle: {
+                                        backgroundColor: "#fff"
+                                    }
+                                }} />
+                                <Stack.Screen name="settings" options={{
+                                    headerTitle: 'Settings',
+                                    headerStyle: {
+                                        backgroundColor: "#fff"
+                                    }
+                                }} />
+                            </Stack>
                         </Suspense>
                     </ApplicationProvider>
                 </AuthProvider>

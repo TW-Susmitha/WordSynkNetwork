@@ -13,7 +13,6 @@ export default function Settings() {
             />
         </View>
     );
-
 }
 
 const styles = StyleSheet.create({

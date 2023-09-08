@@ -1,14 +1,19 @@
 import {Button, StyleSheet, Text, View} from "react-native";
 import * as React from "react";
+import {useAuth} from "@/auth/AuthProvider";
 
 export default function Bookings() {
 
+    const {signOut} = useAuth();
     return(
         <View style={styles.container}>
-            <Text>Insights</Text>
+            <Text>Settings</Text>
+            <Button
+                title="Logout"
+                onPress={() => signOut()}
+            />
         </View>
     );
-
 }
 
 const styles = StyleSheet.create({

@@ -11,7 +11,6 @@ export default function HomeLayout() {
     return (
         <>
             <SafeAreaView style={styles.main}>
-                <ApplicationHeader />
                 <Suspense>
                     <Slot />
                 </Suspense>
