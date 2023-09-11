@@ -47,5 +47,14 @@ export const wordsynk = {
   "color-danger-600": "#B92632",
   "color-danger-700": "#9B1A30",
   "color-danger-800": "#7D102C",
-  "color-danger-900": "#67092A"
+  "color-danger-900": "#67092A",
+  "color-gray-100": "#f3f4f6",
+  "color-gray-200": "#e5e7eb",
+  "color-gray-300": "#d1d5db",
+  "color-gray-400": "#9ca3af",
+  "color-gray-500": "#6b7280",
+  "color-gray-600": "#4b5563",
+  "color-gray-700": "#374151",
+  "color-gray-800": "#1f2937",
+  "color-gray-900": "#111827",
 };

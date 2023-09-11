@@ -1,22 +1,26 @@
 
 import {Slot} from 'expo-router';
 import React, {Suspense} from "react";
-import {NavigationTabs} from "../../components/navigation/navigation-tabs";
-import {ApplicationHeader} from "../../components/navigation/application-header";
-import {StyleSheet} from "react-native";
-import {SafeAreaView} from "react-native-safe-area-context";
+import {StyleSheet, View} from "react-native";
+import {ApplicationHeader} from "@/components/navigation/application-header";
+import {useSafeAreaInsets} from "react-native-safe-area-context";
+import {wordsynk} from "@/theme/wordsynk";
+import 'react-native-gesture-handler';
+import {ApplicationMenu} from "@/components/navigation/application-menu";
 
 export default function HomeLayout() {
-
+    const insets = useSafeAreaInsets();
     return (
-        <>
-            <SafeAreaView style={styles.main}>
-                <Suspense>
-                    <Slot />
-                </Suspense>
-                <NavigationTabs />
-            </SafeAreaView>
-        </>
+        <View style={{
+            paddingTop: insets.top,
+            flex:1,
+            backgroundColor: wordsynk["color-primary-500"]
+        }}>
+            <ApplicationHeader />
+            <Suspense>
+                <Slot />
+            </Suspense>
+        </View>
     );
 }
 
@@ -24,5 +28,5 @@ const styles = StyleSheet.create({
     main: {
         flex: 1,
         backgroundColor: '#fff'
-    },
+    }
 });

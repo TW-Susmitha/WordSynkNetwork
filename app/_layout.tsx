@@ -24,40 +24,14 @@ export default function HomeLayout() {
                         <Suspense>
                             <Stack>
                                 <Stack.Screen name="auth" options={{
-                                    headerTitle: 'Login',
+                                    headerTitle: "",
                                     headerStyle: {
-                                        backgroundColor: "#fff"
-                                    }
+                                        backgroundColor: "#dbf3fc"
+                                    },
+                                    headerShadowVisible: false
                                 }} />
-                                <Stack.Screen name="bookings" options={{
-                                    headerTitle: 'Bookings',
-                                    headerStyle: {
-                                        backgroundColor: "#fff"
-                                    }
-                                }} />
-                                <Stack.Screen name="offers" options={{
-                                    headerTitle: 'Offers',
-                                    headerStyle: {
-                                        backgroundColor: "#fff"
-                                    }
-                                }} />
-                                <Stack.Screen name="insights" options={{
-                                    headerTitle: 'Insights',
-                                    headerStyle: {
-                                        backgroundColor: "#fff"
-                                    }
-                                }} />
-                                <Stack.Screen name="invoices" options={{
-                                    headerTitle: 'Invoices',
-                                    headerStyle: {
-                                        backgroundColor: "#fff"
-                                    }
-                                }} />
-                                <Stack.Screen name="settings" options={{
-                                    headerTitle: 'Settings',
-                                    headerStyle: {
-                                        backgroundColor: "#fff"
-                                    }
+                                <Stack.Screen name="(main)" options={{
+                                    headerShown: false
                                 }} />
                             </Stack>
                         </Suspense>
@@ -70,11 +44,6 @@ export default function HomeLayout() {
 
 const styles = StyleSheet.create({
     main: {
-        flex: 1,
-        backgroundColor: '#ff9'
-    },
-    status: {
-        backgroundColor: '#f76',
-        height: 200
-    },
+        flex: 1
+    }
 });

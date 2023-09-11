@@ -1,10 +1,12 @@
 import {StyleSheet, Text, View} from "react-native";
+import {SafeAreaView} from "react-native-safe-area-context";
+import {ApplicationHeader} from "@/components/navigation/application-header";
 
-export default function Invoices() {
+export const OffersHome = () => {
 
     return(
         <View style={styles.container}>
-            <Text>Invoices</Text>
+            <Text>Offers</Text>
         </View>
     );
 

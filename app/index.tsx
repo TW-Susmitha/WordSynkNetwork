@@ -8,7 +8,7 @@ export default function Page() {
 
     if (!rootNavigationState?.key) return null;
 
-    return <Redirect href={'/bookings'} />;
+    return <Redirect href={'/home'} />;
 }
 
 const styles = StyleSheet.create({

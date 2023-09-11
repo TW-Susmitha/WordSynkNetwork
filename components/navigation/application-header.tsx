@@ -1,36 +1,20 @@
 import React from 'react';
 import { Icon, IconElement, TopNavigation, TopNavigationAction } from '@ui-kitten/components';
 import {ImageProps} from "react-native-svg";
+import {Text} from "react-native";
 import {useRouter} from "expo-router";
+import {wordsynk} from "@/theme/wordsynk";
+import {DrawerActions} from "@react-navigation/native"
 
-const BackIcon = (props : Partial<ImageProps> | undefined): IconElement => (
-    <Icon
-        {...props}
-name='arrow-back'
-    />
+const MenuIcon = (props : Partial<ImageProps> | undefined): IconElement => (
+    <Icon {...props} name='menu-outline' fill="#fff" size={32}  />
 );
 
-const SettingsIcon = (props : Partial<ImageProps> | undefined): IconElement => (
-    <Icon
-        {...props}
-        name='settings-outline'
-    />
-);
 
-const BackAction = (): React.ReactElement => {
-    const router = useRouter();
-    if(!router.canGoBack()){
-        return (<></>);
-    }
-    return (
-        <TopNavigationAction icon={BackIcon} onPress={()=>router.back()} />
-    );
-}
-
-const SettingsAction = (): React.ReactElement => {
+const DrawerAction = (): React.ReactElement => {
     const router = useRouter();
     return (
-        <TopNavigationAction icon={SettingsIcon} onPress={() => router.push("/settings")} />
+        <TopNavigationAction icon={MenuIcon} onPress={() => DrawerActions.toggleDrawer()} />
     );
 }
 
@@ -38,9 +22,14 @@ const SettingsAction = (): React.ReactElement => {
 export const ApplicationHeader = () => {
     return(
         <TopNavigation
-            accessoryLeft={BackAction}
-            accessoryRight={SettingsAction}
-            title='WordSynk Network'
+            style={{
+                backgroundColor: wordsynk["color-primary-500"]
+            }}
+            title={() =>{
+                return <Text style={{color: "#fff", fontSize: 20}}>Bookings</Text>
+            }}
+            alignment="center"
+            accessoryRight={DrawerAction}
         />
     );
 }

@@ -29,10 +29,6 @@ export default function HomeLayout() {
 const styles = StyleSheet.create({
     main: {
         flex: 1,
-        backgroundColor: '#ff9'
-    },
-    status: {
-        backgroundColor: '#f76',
-        height: 200
-    },
+        backgroundColor: '#fff'
+    }
 });

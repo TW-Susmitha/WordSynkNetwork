@@ -1,8 +1,9 @@
 import {Button, StyleSheet, Text, View} from "react-native";
 import * as React from "react";
 import {useAuth} from "@/auth/AuthProvider";
+import {SafeAreaView} from "react-native-safe-area-context";
 
-export default function Bookings() {
+export const InsightsHome = () => {
 
     const {signOut} = useAuth();
     return(

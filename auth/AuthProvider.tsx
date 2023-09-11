@@ -16,7 +16,7 @@ const redirectUri = AuthSession.makeRedirectUri({
 });
 
 export interface IAuthContext {
-    signIn: () => Promise<void>;
+    signIn: () => Promise<boolean>;
     signOut: () => Promise<void>;
 }
 
@@ -25,7 +25,7 @@ type providerProps = {
 }
 
 const AuthContext = React.createContext<IAuthContext>({
-    signIn: async () => {},
+    signIn: async () : Promise<boolean> => { return false; },
     signOut: async () => {},
 });
 
@@ -88,7 +88,7 @@ export function AuthProvider(props: providerProps) {
     );
 
     //ToDo: display a message to the user if the auth process fails.
-    const signIn = async () => {
+    const signIn = async () : Promise<boolean> => {
         const response = await promptAsync();
         if (request && response?.type === 'success' && discovery) {
             const tokenResponse = await GetTokensAsync(request, response, discovery);
@@ -101,8 +101,10 @@ export function AuthProvider(props: providerProps) {
                         token: tokenResponse.access_token
                     })
                 });
+                return true;
             }
         }
+        return false;
     };
 
     const signOut = async () => {
