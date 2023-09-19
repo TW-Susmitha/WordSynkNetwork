@@ -3,6 +3,8 @@ import { light } from '@eva-design/eva';
 export const wordsynk = {
   ...light,
 
+  "color-primary-10": "#f5e7fd",
+  "color-primary-50": "#f0dbfc",
   "color-primary-100": "#ECCFFC",
   "color-primary-200": "#D6A1FA",
   "color-primary-300": "#B670F0",

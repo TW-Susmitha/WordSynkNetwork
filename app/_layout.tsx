@@ -33,6 +33,14 @@ export default function HomeLayout() {
                                 <Stack.Screen name="(main)" options={{
                                     headerShown: false
                                 }} />
+                                <Stack.Screen name="settings" options={{
+                                    presentation: "modal",
+                                    headerTitle: "Settings",
+                                    headerTintColor: 'white',
+                                    headerStyle: {
+                                        backgroundColor: "#007CDB",
+                                    },
+                                }}></Stack.Screen>
                             </Stack>
                         </Suspense>
                     </ApplicationProvider>

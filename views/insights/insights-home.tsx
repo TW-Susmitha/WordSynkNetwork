@@ -9,10 +9,6 @@ export const InsightsHome = () => {
     return(
         <View style={styles.container}>
             <Text>Settings</Text>
-            <Button
-                title="Logout"
-                onPress={() => signOut()}
-            />
         </View>
     );
 }

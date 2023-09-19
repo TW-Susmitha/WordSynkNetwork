@@ -1,12 +1,7 @@
-import {Animated, Button, Dimensions, FlatList, StyleSheet, Text, View} from "react-native";
-import {SafeAreaView, useSafeAreaInsets} from "react-native-safe-area-context";
-import {ApplicationHeader} from "@/components/navigation/application-header";
+import {Animated, Button, Dimensions, StyleSheet, Text, View, FlatList} from "react-native";
 import ScrollView = Animated.ScrollView;
-import Swipeable from 'react-native-gesture-handler/Swipeable';
 import {wordsynk} from "@/theme/wordsynk";
 import {format} from "date-fns";
-import {RectButton} from "react-native-gesture-handler";
-import {BookingCalendar} from "@/views/booking/booking-calendar";
 
 type Booking = {
     reference: string,
@@ -24,8 +19,8 @@ type DayView = {
 
 const bookings : Array<Booking> = [{
     reference: "NPB10001",
-    startDate: new Date('2023-09-12T09:00:00Z'),
-    endDate: new Date('2023-09-12T10:00:00Z'),
+    startDate: new Date(Date.parse('2023-09-12 09:00:00')),
+    endDate: new Date(Date.parse('2023-09-12 10:00:00')),
     name: "Appointment One",
     fromLanguage: "English",
     toLanguage: "Dutch"
@@ -95,14 +90,6 @@ const bookings : Array<Booking> = [{
         name: "Appointment Three",
         fromLanguage: "English",
         toLanguage: "Dutch"
-    },
-    {
-        reference: "NPB10010",
-        startDate: new Date(Date.parse('2023-09-15 07:00:00')),
-        endDate: new Date(Date.parse('2023-09-15 13:00:00')),
-        name: "Appointment Four",
-        fromLanguage: "English",
-        toLanguage: "Dutch"
     }
 
     ];
@@ -118,6 +105,7 @@ export const BookingHome = () => {
         return bookings.reduce((accumulator : Record<string, Array<Booking>>, booking) => {
 
             const  startDate = format(new Date(booking.startDate), "yyyy-MM-dd");
+            console.log(startDate)
 
             if (!accumulator[startDate]) {
                 accumulator[startDate] = [];
@@ -141,19 +129,9 @@ export const BookingHome = () => {
         return dates;
     }
 
-    function addDays(date : Date, days: number) {
-        date.setDate(date.getDate() + days);
-        return date;
-    }
-
-    //console.log(calendarDates(addDays(minDate, -30), addDays(maxDate, 30)))
-
-    console.log(minDate)
-    console.log(maxDate)
-
     const grouped = groupBookingsByStartDate(bookings);
 
-    const data = calendarDates(addDays(minDate, -30), addDays(maxDate, 30)).map((item) => {
+    const data = calendarDates(minDate, maxDate).map((item) => {
         const day: DayView = {
           date: new Date(Date.parse(item)),
           bookings: grouped[item] ?? []
@@ -162,28 +140,8 @@ export const BookingHome = () => {
         return day;
     })
 
-    const renderLeftActions = (progress, dragX) => {
-        const trans = dragX.interpolate({
-            inputRange: [0, 50, width-50, (width-50)+1],
-            outputRange: [-20, 0, 0, 1],
-        });
-        return (
-
-                <Animated.View
-                    style={{
-                            width: width - 50,
-                            transform: [{ translateX: trans }],
-                        alignItems: "center",
-                        backgroundColor: wordsynk["color-primary-10"]
-                        }}>
-                    <BookingCalendar />
-                </Animated.View>
-
-        );
-    };
 
     return (
-        <Swipeable containerStyle={{flex:1}} childrenContainerStyle={{flex:1}} renderLeftActions={renderLeftActions}>
         <View style={styles.container}>
             <View style={styles.swipehandle}>
                 <Text style={{
@@ -199,41 +157,39 @@ export const BookingHome = () => {
 
                     ]}}>September 2023</Text>
             </View>
-            <FlatList data={data} renderItem={(day)=>{
-
-                return (
-                    <View key={day.item.date.toISOString()} style={{ height: 100, width: width-40, flexDirection: 'row'}}>
-                        <View style={{ width:50, backgroundColor: wordsynk["color-primary-200"], alignItems: 'center', justifyContent: 'center' }}>
-                            <View style={{flexDirection: 'row', transform: [{ rotate: '-90deg'}]}}>
-                                <Text style={{textTransform: 'uppercase', }}>{format(day.item.date, "eee")}</Text><Text style={{fontWeight: 'bold'}}>{format(day.item.date, "dd")}</Text>
+            <ScrollView style={styles.scroll}>
+                {data.map((day) => {
+                    return (
+                        <View style={{ height: 100, width: width-40, flexDirection: 'row'}}>
+                            <View style={{ width:50, backgroundColor: wordsynk["color-primary-200"], alignItems: 'center', justifyContent: 'center' }}>
+                                <View style={{flexDirection: 'row', transform: [{ rotate: '-90deg'}]}}>
+                                    <Text style={{textTransform: 'uppercase', }}>{format(day.date, "eee")}</Text><Text style={{fontWeight: 'bold'}}>{format(day.date, "dd")}</Text>
+                                </View>
+                            </View>
+                            <View style={{ flex: 1, paddingLeft:15, backgroundColor: (day.date.getDate() % 2) ? wordsynk["color-primary-10"] : wordsynk["color-primary-50"], alignItems: 'flex-start', justifyContent: 'center'}}>
+                                {day.bookings.map((booking)=>{
+                                    return (
+                                        <View style={{flexDirection: 'row'}}>
+                                            <Text>{format(booking.startDate, "h:mm aa")}</Text>
+                                            <Text>- {booking.name}</Text>
+                                        </View>
+                                        )
+                                })}
                             </View>
                         </View>
-                        <View style={{ flex: 1, paddingLeft:15, backgroundColor: (day.item.date.getDate() % 2) ? wordsynk["color-primary-10"] : wordsynk["color-primary-50"], alignItems: 'flex-start', justifyContent: 'center'}}>
-                            {day.item.bookings.map((booking)=>{
-                                return (
-                                    <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                                        <Text style={{width:60, fontSize:10, textAlignVertical: 'center'}}> {format(booking.startDate, "h:mm aa")}</Text>
-                                        <Text style={{width: 20,  fontWeight: 'bold', textAlignVertical: 'top'}}>•</Text>
-                                        <Text style={{textAlignVertical: 'center', fontSize:12 }}>{booking.reference} - {booking.name}</Text>
-                                    </View>
-                                )
-                            })}
-                        </View>
-                    </View>
 
-                )
-            }} />
+                    )
+                })}
+            </ScrollView>
         </View>
 
-        </Swipeable>
     );
 }
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        flexDirection: "row",
-        backgroundColor: wordsynk["color-primary-200"]
+        flexDirection: "row"
     },
     scroll: {
 
