@@ -1,4 +1,4 @@
-import {Drawer, DrawerItem, Icon, Layout} from "@ui-kitten/components";
+import {Drawer, DrawerItem, Icon, Layout, IconElement, List, ListItem, Divider } from "@ui-kitten/components";
 import React from "react";
 import {wordsynk} from "@/theme/wordsynk";
 import {StatusBar} from "expo-status-bar";
@@ -12,7 +12,12 @@ import {useRouter} from "expo-router";
 
 const { Navigator, Screen } = createDrawerNavigator();
 
-
+interface IListItem {
+    title: string;
+    icon: string;
+    description: string;
+    action: Function;
+}
 
 const DrawerContent = ({ navigation, state }) => {
 
@@ -27,13 +32,51 @@ const DrawerContent = ({ navigation, state }) => {
     const {signOut} = useAuth();
     const router = useRouter();
 
+    const renderItemIcon = (name: string): IconElement => (
+        <Icon name={name} />
+    );
+
+    const renderItem = ({item, index} : {item: IListItem, index: number}) => (
+        <ListItem
+            title={`${item.title}`}
+            description={`${item.description}`}
+            accessoryLeft={renderItemIcon(item.icon)}
+            onPress={() =>item.action()}
+            //accessoryRight={renderItemAccessory}
+        />
+    )
+
+    const data : Array<IListItem>  = [
+        {
+            title: "Settings",
+            icon: 'settings-outline',
+            description:  "Manage application settings",
+            action: ()  => router.push('/settings')
+        },
+        {
+            title: "Profile",
+            icon: 'person-outline',
+            description:  "View and edit your profile",
+            action: ()  => router.push('/profile')
+        },
+        {
+            title: "About",
+            icon: 'cube-outline',
+            description:  "WordSynk Network information",
+            action: ()  => router.push('/about')
+        },
+        {
+            title: "Sign Out",
+            icon: 'log-out-outline',
+            description:  "Sign out of WordSynk Network",
+            action: ()  => signOut()
+        }
+    ]
+
     return (
-        <Drawer>
-            <DrawerItem title="Settings" onPress={() => router.push("/settings")} accessoryLeft={<Icon name="settings-outline" />}  accessoryRight={<Icon name="chevron-right-outline" />} />
-            <DrawerItem title="Profile"  accessoryLeft={<Icon name="person-outline" />} accessoryRight={<Icon name="chevron-right-outline" />} />
-            <DrawerItem title="About"  accessoryLeft={<Icon name="cube-outline" />} accessoryRight={<Icon name="chevron-right-outline" />} />
-            <DrawerItem title="Logout"  onPress={() => signOut()} accessoryLeft={<Icon name="log-out-outline" />} accessoryRight={<Icon name="chevron-right-outline" />} />
-        </Drawer>
+        <List renderItem={renderItem} data={data} ItemSeparatorComponent={Divider}>
+
+        </List>
     )
 };
 

@@ -129,6 +129,7 @@ export const BookingHome = () => {
         }, {});
     };
 
+
     const calendarDates = (startDate: Date, endDate: Date): Array<string> => {
         const dates : Array<string> = [];
         let currentDate = new Date(startDate);
@@ -146,14 +147,14 @@ export const BookingHome = () => {
         return date;
     }
 
-    //console.log(calendarDates(addDays(minDate, -30), addDays(maxDate, 30)))
+    /*calendarDates(addDays(minDate, -30), addDays(maxDate, 30)).map(item => {
+        console.log(`Date: ${item} - ${new Date(Date.parse(item))}`)
+    })*/
 
-    console.log(minDate)
-    console.log(maxDate)
 
     const grouped = groupBookingsByStartDate(bookings);
 
-    const data = calendarDates(addDays(minDate, -30), addDays(maxDate, 30)).map((item) => {
+    const data = calendarDates(addDays(minDate, -10), addDays(maxDate, 10)).map((item) => {
         const day: DayView = {
           date: new Date(Date.parse(item)),
           bookings: grouped[item] ?? []
@@ -200,10 +201,9 @@ export const BookingHome = () => {
                     ]}}>September 2023</Text>
             </View>
             <FlatList data={data} renderItem={(day)=>{
-
                 return (
                     <View key={day.item.date.toISOString()} style={{ height: 100, width: width-40, flexDirection: 'row'}}>
-                        <View style={{ width:50, backgroundColor: wordsynk["color-primary-200"], alignItems: 'center', justifyContent: 'center' }}>
+                        <View style={{ width:35, backgroundColor: wordsynk["color-primary-200"], alignItems: 'center', justifyContent: 'center' }}>
                             <View style={{flexDirection: 'row', transform: [{ rotate: '-90deg'}]}}>
                                 <Text style={{textTransform: 'uppercase', }}>{format(day.item.date, "eee")}</Text><Text style={{fontWeight: 'bold'}}>{format(day.item.date, "dd")}</Text>
                             </View>
@@ -211,7 +211,7 @@ export const BookingHome = () => {
                         <View style={{ flex: 1, paddingLeft:15, backgroundColor: (day.item.date.getDate() % 2) ? wordsynk["color-primary-10"] : wordsynk["color-primary-50"], alignItems: 'flex-start', justifyContent: 'center'}}>
                             {day.item.bookings.map((booking)=>{
                                 return (
-                                    <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                                    <View key={booking.reference} style={{flexDirection: 'row', alignItems: 'center'}}>
                                         <Text style={{width:60, fontSize:10, textAlignVertical: 'center'}}> {format(booking.startDate, "h:mm aa")}</Text>
                                         <Text style={{width: 20,  fontWeight: 'bold', textAlignVertical: 'top'}}>•</Text>
                                         <Text style={{textAlignVertical: 'center', fontSize:12 }}>{booking.reference} - {booking.name}</Text>
